@@ -1,29 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateScheduleDto } from './schedule.dto';
-import { Schedule } from './schedule.entity';
+import { CreateClientDto } from './client.dto';
+import { Client } from './client.entity';
 
 @Injectable()
-export class ScheduleService {
-  @InjectRepository(Schedule)
-  private readonly repository: Repository<Schedule>;
+export class ClientService {
+  @InjectRepository(Client)
+  private readonly repository: Repository<Client>;
 
   public get() {
     return this.repository.find();
   }
-  public getSchedule(body: any) {
-    return this.repository.find({
-      where: {
-        day: body.day,
-        month: body.month,
-        year: body.year,
-        user: body.user,
-      },
-    });
-  }
 
-  public create(body: CreateScheduleDto) {
+  public create(body: CreateClientDto) {
     return this.repository.save(body);
   }
 

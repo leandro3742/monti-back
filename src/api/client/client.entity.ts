@@ -4,13 +4,15 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
   OneToMany,
 } from 'typeorm';
 import { UserRole } from '../enums';
 import { Schedule } from '../schedule/schedule.entity';
+import { User } from '../user/user.entity';
 
 @Entity()
-export class User {
+export class Client {
   @PrimaryGeneratedColumn()
   public id!: number;
 
@@ -32,15 +34,11 @@ export class User {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.CLIENT })
   public role: string;
 
-  @OneToMany(() => Schedule, (schedule) => schedule.user)
+  @OneToMany(() => Schedule, (schedule) => schedule.client)
   public schedules: Schedule[];
 
   @Column({ type: 'boolean', default: false })
   public isDeleted: boolean;
-
-  /*
-   * Create and Update Date Columns
-   */
 
   @CreateDateColumn({ type: 'timestamp' })
   public createdAt!: Date;

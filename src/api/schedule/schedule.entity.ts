@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
+import { Client } from '../client/client.entity';
 import { User } from '../user/user.entity';
 
 @Entity()
@@ -31,11 +32,12 @@ export class Schedule {
   @Column({ type: 'boolean', default: false })
   public isDeleted: boolean;
 
-  @ManyToOne(() => User, (user) => user.id)
-  client: User;
+  @ManyToOne(() => Client, (client) => client.schedules)
+  client: Client;
 
-  @ManyToOne(() => User, (user) => user.id)
-  employee: User;
+  @ManyToOne(() => User, (user) => user.schedules)
+  user: User;
+
 
   @CreateDateColumn({ type: 'timestamp' })
   public createdAt!: Date;
