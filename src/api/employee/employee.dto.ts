@@ -1,8 +1,6 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
-import { User } from '../user/user.entity';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateEmployeeDto {
-  @IsString()
   @IsString()
   @IsNotEmpty()
   public name: string;
@@ -20,9 +18,9 @@ export class CreateEmployeeDto {
 
   @IsString()
   @IsNotEmpty()
-  public mobilePhone: string;
+  public password: string;
 
   @IsString()
   @IsNotEmpty()
-  public role: string;
+  public mobilePhone: string;
 }

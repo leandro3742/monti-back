@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
-import { User } from '../user/user.entity';
-
+import { Employee } from '../employee/employee.entity';
+import { Client } from '../client/client.entity';
 export class CreateScheduleDto {
   @IsString()
   @IsNotEmpty()
@@ -16,11 +16,11 @@ export class CreateScheduleDto {
 
   @IsNumber()
   @IsNotEmpty()
-  public user: User;
+  public employee: Employee;
 
-  // @IsNumber()
-  // @IsNotEmpty()
-  // public clientId: string;
+  @IsNumber()
+  @IsNotEmpty()
+  public client: Client;
 
   @IsString()
   @IsNotEmpty()
@@ -29,4 +29,8 @@ export class CreateScheduleDto {
   @IsString()
   @IsNotEmpty()
   public end: string;
+
+  @IsString()
+  @IsNotEmpty()
+  public address: string;
 }

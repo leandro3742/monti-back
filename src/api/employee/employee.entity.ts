@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 import { UserRole } from '../enums';
 import { Schedule } from '../schedule/schedule.entity';
-import { User } from '../user/user.entity';
 
 @Entity()
 export class Employee {
@@ -31,10 +30,13 @@ export class Employee {
   @Column({ type: 'varchar', length: 120 })
   public mobilePhone: string;
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.EMPLOYEE })
+  @Column({ type: 'varchar', length: 120 })
+  public password: string;
+
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.CLIENT })
   public role: string;
 
-  @OneToMany(() => Schedule, (schedule) => schedule.client)
+  @OneToMany(() => Schedule, (schedule) => schedule.employee)
   public schedules: Schedule[];
 
   @Column({ type: 'boolean', default: false })

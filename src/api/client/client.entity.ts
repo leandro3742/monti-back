@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 import { UserRole } from '../enums';
 import { Schedule } from '../schedule/schedule.entity';
-import { User } from '../user/user.entity';
 
 @Entity()
 export class Client {

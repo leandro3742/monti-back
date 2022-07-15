@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateEmployeeDto } from './employee.dto';
@@ -13,16 +13,10 @@ export class EmployeeService {
     return this.repository.find();
   }
 
+  public login(body: any) {
+    return this.repository.findOne({ where: { ci: body.ci, password: body.password } })
+  }
   public create(body: CreateEmployeeDto) {
     return this.repository.save(body);
   }
-
-  // public createUser(body: CreateUserDto): Promise<User> {
-  //   const user: User = new User();
-
-  //   user.name = body.name;
-  //   user.email = body.email;
-
-  //   return this.repository.save(user);
-  // }
 }

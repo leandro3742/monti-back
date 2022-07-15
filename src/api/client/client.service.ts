@@ -9,8 +9,12 @@ export class ClientService {
   @InjectRepository(Client)
   private readonly repository: Repository<Client>;
 
-  public get() {
+  public getClients() {
     return this.repository.find();
+  }
+
+  public getClient(ci: string) {
+    return this.repository.findOne({ where: { ci: ci } });
   }
 
   public create(body: CreateClientDto) {

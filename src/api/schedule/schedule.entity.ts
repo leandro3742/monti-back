@@ -7,7 +7,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { Client } from '../client/client.entity';
-import { User } from '../user/user.entity';
+import { Employee } from '../employee/employee.entity';
 
 @Entity()
 export class Schedule {
@@ -30,13 +30,19 @@ export class Schedule {
   public end: string;
 
   @Column({ type: 'boolean', default: false })
+  public paidOff: string;
+
+  @Column({ type: 'varchar', length: 120 })
+  public address: string;
+
+  @Column({ type: 'boolean', default: false })
   public isDeleted: boolean;
 
   @ManyToOne(() => Client, (client) => client.schedules)
   client: Client;
 
-  @ManyToOne(() => User, (user) => user.schedules)
-  user: User;
+  @ManyToOne(() => Employee, (employee) => employee.schedules)
+  employee: Employee;
 
 
   @CreateDateColumn({ type: 'timestamp' })

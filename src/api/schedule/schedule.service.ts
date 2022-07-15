@@ -18,7 +18,7 @@ export class ScheduleService {
         day: body.day,
         month: body.month,
         year: body.year,
-        user: body.user,
+        employee: body.employee,
       },
     });
   }
