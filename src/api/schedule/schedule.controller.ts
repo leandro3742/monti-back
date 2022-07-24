@@ -16,10 +16,16 @@ export class ScheduleController {
   public get() {
     return this.scheduleService.get();
   }
+
   @Post('create')
   public async create(@Res() response, @Body() body: CreateScheduleDto) {
-    let create = await this.scheduleService.create(body);
-    return response.status(HttpStatus.CREATED).send({ data: create, status: HttpStatus.CREATED })
+    let avaiable = await this.scheduleService.avaiableTime(body);
+    if(avaiable.length === 0){
+      let create = await this.scheduleService.create(body);
+      return response.status(HttpStatus.CREATED).send({ data: create, status: HttpStatus.CREATED })
+    }
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "La hora ya fue reservada", status: HttpStatus.NOT_ACCEPTABLE })
+
   }
 
   // @Post('login')

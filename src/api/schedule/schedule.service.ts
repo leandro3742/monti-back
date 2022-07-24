@@ -23,6 +23,18 @@ export class ScheduleService {
     });
   }
 
+  public avaiableTime(body: any) {
+    return this.repository.find({
+      where: {
+        day: body.day,
+        month: body.month,
+        year: body.year,
+        employee: body.employee,
+        start: body.satart,
+        end: body.end
+      }
+    })
+  }
   public create(body: CreateScheduleDto) {
     return this.repository.save(body);
   }
