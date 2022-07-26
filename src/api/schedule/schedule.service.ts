@@ -12,15 +12,29 @@ export class ScheduleService {
   public get() {
     return this.repository.find();
   }
-  public getSchedule(body: any) {
-    return this.repository.find({
-      where: {
-        day: body.day,
-        month: body.month,
-        year: body.year,
-        employee: body.employee,
-      },
-    });
+  
+  public getSingleReserve(id: number){
+    return this.repository.findOne({where: {id: id}})
+  }
+
+  public deleteReserve(reserve: Schedule){
+    // return this.repository
+    // .createQueryBuilder()
+    // .delete()
+    // .where("id = :id", {id: id})
+    // .execute()
+    return this.repository.remove(reserve)
+  }
+
+  public async getSchedule(body: any) {
+    return this.repository
+      .createQueryBuilder("schedule")
+      .leftJoinAndSelect("schedule.client", "name")
+      .where("schedule.day = :day", {day: body.day})
+      .andWhere("schedule.month = :month", {month: body.month})
+      .andWhere("schedule.year = :year", {year: body.year})
+      .andWhere("schedule.employee = :employee", {employee: body.employee})
+      .getMany()
   }
 
   public avaiableTime(body: any) {
@@ -39,12 +53,4 @@ export class ScheduleService {
     return this.repository.save(body);
   }
 
-  // public createUser(body: CreateUserDto): Promise<User> {
-  //   const user: User = new User();
-
-  //   user.name = body.name;
-  //   user.email = body.email;
-
-  //   return this.repository.save(user);
-  // }
 }

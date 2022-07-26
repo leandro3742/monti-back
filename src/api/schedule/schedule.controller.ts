@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { CreateScheduleDto } from './schedule.dto';
 import { ScheduleService } from './schedule.service';
 
@@ -14,9 +14,22 @@ export class ScheduleController {
 
   @Get('')
   public get() {
+    
     return this.scheduleService.get();
   }
 
+  @Delete('/delete/:id')
+  public async delete(@Res() response, @Param('id') id: number){
+    let reserve = await this.scheduleService.getSingleReserve(id);
+    if(reserve){
+      let deleteReserve = await this.scheduleService.deleteReserve(reserve);
+      if(deleteReserve){
+        return response.status(HttpStatus.OK).send({ data: "La reserva fue eliminada con éxito", status: HttpStatus.OK })
+      }
+      return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrió un error, intentelo más tarde", status: HttpStatus.NOT_ACCEPTABLE })
+    }
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "La reserva no existe", status: HttpStatus.NOT_ACCEPTABLE })
+  }
   @Post('create')
   public async create(@Res() response, @Body() body: CreateScheduleDto) {
     let avaiable = await this.scheduleService.avaiableTime(body);
