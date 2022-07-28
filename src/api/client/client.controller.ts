@@ -20,7 +20,11 @@ export class ClientController {
   }
 
   @Post('create')
-  public create(@Body() body: CreateClientDto) {
+  public async create(@Res() response, @Body() body: CreateClientDto) {
+    let client = await this.clientService.create(body);
+    if (client) return response.status(HttpStatus.CREATED).send({ data: client, status: HttpStatus.CREATED })
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrió un error al intentar crear el usuario", status: HttpStatus.NOT_ACCEPTABLE });
+
     return this.clientService.create(body);
   }
 }
