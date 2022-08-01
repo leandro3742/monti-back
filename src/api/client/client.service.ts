@@ -10,7 +10,7 @@ export class ClientService {
   private readonly repository: Repository<Client>;
 
   public getClients() {
-    return this.repository.find();
+    return this.repository.find({where: {isDeleted: false}});
   }
 
   public getClient(ci: string) {
@@ -19,6 +19,15 @@ export class ClientService {
 
   public create(body: CreateClientDto) {
     return this.repository.save(body);
+  }
+
+  public delete(id: string) {
+    return this.repository
+      .createQueryBuilder()
+      .update('client')
+      .set({ isDeleted: true })
+      .where('id = :id', {id : id })
+      .execute();
   }
 
   // public createUser(body: CreateUserDto): Promise<User> {

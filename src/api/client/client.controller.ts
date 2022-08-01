@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { CreateClientDto } from './client.dto';
 import { ClientService } from './client.service';
 
@@ -26,5 +26,12 @@ export class ClientController {
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrió un error al intentar crear el usuario", status: HttpStatus.NOT_ACCEPTABLE });
 
     return this.clientService.create(body);
+  }
+
+  @Delete('/delete/:id')
+  public async delete(@Res() response, @Param('id') id: string){
+    let client = await this.clientService.delete(id)
+    if (client.affected !== 0) return response.status(HttpStatus.OK).send({ data: client, status: HttpStatus.OK })
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "El usuario no existe", status: HttpStatus.NOT_ACCEPTABLE });
   }
 }
