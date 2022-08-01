@@ -33,6 +33,12 @@ export class Employee {
   @Column({ type: 'varchar', length: 120 })
   public password: string;
 
+  @Column({ type: 'integer' })
+  public start: number;
+
+  @Column({ type: 'integer' })
+  public finish: number;
+
   @Column({ type: 'enum', enum: UserRole, default: UserRole.CLIENT })
   public role: string;
 
