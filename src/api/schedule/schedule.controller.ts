@@ -8,8 +8,14 @@ export class ScheduleController {
   constructor(private readonly scheduleService: ScheduleService) { }
 
   @Post('getSchedule')
-  public getSchedule(@Body() body: any) {
-    return this.scheduleService.getSchedule(body);
+  public async getSchedule(@Res() response, @Body() body: any) {
+    let reserve = await this.scheduleService.getSchedule(body);
+    if(reserve){
+      return response.status(HttpStatus.OK).send({ data: reserve, status: HttpStatus.OK })
+    }
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "ocurrio un error, vuelva a intentarlo", status: HttpStatus.NOT_FOUND })
+
+    // return this.scheduleService.getSchedule(body);
   }
 
   @Get('')
