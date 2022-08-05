@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Client } from '../client/client.entity';
 import { CreateScheduleDto } from './schedule.dto';
 import { Schedule } from './schedule.entity';
 
@@ -53,4 +54,11 @@ export class ScheduleService {
     return this.repository.save(body);
   }
 
+  public cantLesson(id: number) {
+    return this.repository
+      .createQueryBuilder('schedule')
+      .select('COUNT(schedule.id)')
+      .where("schedule.clientId = :id", { id: id })
+      .execute()
+  }
 }

@@ -24,6 +24,15 @@ export class ScheduleController {
     return this.scheduleService.get();
   }
 
+  @Get('/cantLessons/:id')
+  public  async getCantLessons(@Res() response, @Param('id') id: number){
+    let resp = await this.scheduleService.cantLesson(id)
+    if(resp){
+      return response.status(HttpStatus.OK).send({ data: resp[0], status: HttpStatus.OK })
+    }
+    else
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrio un error, vuelva a intentarlo", status: HttpStatus.NOT_ACCEPTABLE })
+  }
   @Delete('/delete/:id')
   public async delete(@Res() response, @Param('id') id: number){
     let reserve = await this.scheduleService.getSingleReserve(id);
