@@ -19,12 +19,13 @@ export class ScheduleService {
   }
 
   public deleteReserve(reserve: Schedule){
-    // return this.repository
-    // .createQueryBuilder()
-    // .delete()
-    // .where("id = :id", {id: id})
-    // .execute()
-    return this.repository.remove(reserve)
+    return this.repository
+      .createQueryBuilder()
+      .update('schedule')
+      .set({ isDeleted: true })
+      .where('id = :id', {id : reserve.id })
+      .execute();
+    // return this.repository.remove(reserve)
   }
 
   public async getSchedule(body: any) {
@@ -35,6 +36,7 @@ export class ScheduleService {
       .andWhere("schedule.month = :month", {month: body.month})
       .andWhere("schedule.year = :year", {year: body.year})
       .andWhere("schedule.employee = :employee", {employee: body.employee})
+      .andWhere("schedule.isDeleted = false")
       .getMany()
   }
 
@@ -52,6 +54,18 @@ export class ScheduleService {
   }
   public create(body: CreateScheduleDto) {
     return this.repository.save(body);
+  }
+
+  public getReport(employee: number, year: number, month: number, type:boolean){
+    let isDeleted = type
+    return this.repository
+    .createQueryBuilder('schedule')
+    .select('COUNT(schedule.id)')
+    .where("schedule.employeeId = :id", { id: employee })
+    .andWhere('schedule.isDeleted = :isDeleted', {isDeleted: isDeleted})
+    .andWhere('schedule.year = :year', {year: year})
+    .andWhere('schedule.month = :month', {month: month})
+    .execute()
   }
 
   public cantLesson(id: number) {

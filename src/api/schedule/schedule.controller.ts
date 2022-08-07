@@ -20,7 +20,6 @@ export class ScheduleController {
 
   @Get('')
   public get() {
-    
     return this.scheduleService.get();
   }
 
@@ -33,6 +32,22 @@ export class ScheduleController {
     else
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrio un error, vuelva a intentarlo", status: HttpStatus.NOT_ACCEPTABLE })
   }
+  
+  @Get('getReport/:year/:month/:employeeId')
+  public async getReport(@Res() response, @Param() params: any){
+    let canceledReports = await this.scheduleService.getReport(params.employeeId, params.year, params.month, true)
+    let canceled = canceledReports[0].count 
+    let completedReports = await this.scheduleService.getReport(params.employeeId, params.year, params.month, false)
+    let completed = completedReports[0].count 
+    return response.status(HttpStatus.OK).send({ 
+      data: {
+        'Cantidad de horas trabajadas': completed,
+        'Cantidad de horas canceladas': canceled
+      }, 
+      status: HttpStatus.OK 
+    })
+  }
+  
   @Delete('/delete/:id')
   public async delete(@Res() response, @Param('id') id: number){
     let reserve = await this.scheduleService.getSingleReserve(id);
