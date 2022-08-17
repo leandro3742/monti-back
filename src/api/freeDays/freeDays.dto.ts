@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
 import { Employee } from '../employee/employee.entity';
 import { Client } from '../client/client.entity';
-export class CreateScheduleDto {
+export class FreeDaysDto {
   @IsString()
   @IsNotEmpty()
   public day: string;

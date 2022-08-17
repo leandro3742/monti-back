@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
-import { CreateScheduleDto } from './freeDays.dto';
+import { FreeDaysDto } from './freeDays.dto';
 import { FreeDaysService } from './freeDays.service';
 
 @Controller('freeDays')
@@ -26,9 +26,15 @@ export class FreeDaysController {
   }
 
   @Post('create')
-  public async create(@Res() response, @Body() body: CreateScheduleDto) {
+  public async create(@Res() response, @Body() body: FreeDaysDto) {
     let create = await this.freeDaysService.create(body);
     return response.status(HttpStatus.CREATED).send({ data: create, status: HttpStatus.CREATED })
+  }
+
+  @Post('delete')
+  public async delete(@Res() response, @Body() body: FreeDaysDto) {
+    let deleteFreeDay = await this.freeDaysService.delete(body);
+    return response.status(HttpStatus.CREATED).send({ data: deleteFreeDay, status: HttpStatus.CREATED })
   }
 
   // @Post('login')
