@@ -29,6 +29,17 @@ export class FreeDaysService {
       .getMany()
   }
 
+  public async getByMonth(params: any) {
+    return this.repository
+      .createQueryBuilder("freeDays")
+      .select('COUNT(freeDays.id)')
+      .where("freeDays.year = :year", {year: params.year})
+      .andWhere("freeDays.month = :month", {month: params.month})
+      .andWhere("freeDays.employee = :employee", {employee: params.employee})
+      .andWhere("freeDays.isDeleted = false")
+      .execute()
+  }
+
   public create(body: FreeDaysDto) {
     return this.repository.save(body);
   }

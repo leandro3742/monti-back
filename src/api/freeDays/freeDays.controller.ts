@@ -25,6 +25,15 @@ export class FreeDaysController {
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "ocurrio un error, vuelva a intentarlo", status: HttpStatus.NOT_FOUND })
   }
 
+  @Get('get/:year/:month/:employee')
+  public async getFreeDaysByMonth(@Res() response: any, @Param() params: any) {
+    let reserve = await this.freeDaysService.getByMonth(params);
+    if(reserve){
+      return response.status(HttpStatus.OK).send({ data: reserve, status: HttpStatus.OK })
+    }
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "ocurrio un error, vuelva a intentarlo", status: HttpStatus.NOT_FOUND })
+  }
+
   @Post('create')
   public async create(@Res() response, @Body() body: FreeDaysDto) {
     let create = await this.freeDaysService.create(body);
