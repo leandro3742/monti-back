@@ -1,5 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { isEmail, isMobilePhone } from 'class-validator';
 import { Repository } from 'typeorm';
 import { CreateEmployeeDto } from './employee.dto';
 import { Employee } from './employee.entity';
@@ -13,10 +14,29 @@ export class EmployeeService {
     return this.repository.find();
   }
 
+  public getSingle(id:any) {
+    return this.repository.findOneBy({id: id.id});
+  }
+
   public login(body: any) {
     return this.repository.findOne({ where: { ci: body.ci, password: body.password } })
   }
   public create(body: CreateEmployeeDto) {
     return this.repository.save(body);
+  }
+
+  public update(body:any) {
+    return this.repository
+    .createQueryBuilder()
+    .update('employee')
+    .set({
+      mobilePhone: body.mobilePhone,
+      email: body.email,
+      password: body.password, 
+      start: body.start,
+      finish: body.finish
+    })
+    .where("id = :employeeId", {employeeId: body.id})
+    .execute();
   }
 }

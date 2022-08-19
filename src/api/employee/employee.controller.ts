@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { response } from 'express';
 import { CreateEmployeeDto } from './employee.dto';
 import { EmployeeService } from './employee.service';
@@ -12,12 +12,23 @@ export class EmployeeController {
   public get() {
     return this.employeeService.get();
   }
-
+  @Get('get/:id')
+  public getSingle(@Param() id: string) {
+    return this.employeeService.getSingle(id);
+  }
   @Post('login')
   public async login(@Res() response, @Body() body: any) {
     let employee = await this.employeeService.login(body);
     if (employee) return response.status(HttpStatus.CREATED).send({ data: employee, status: HttpStatus.CREATED })
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "El usuario y la contraseña no coinciden", status: HttpStatus.NOT_ACCEPTABLE });
+  }
+
+
+  @Post('update')
+  public async update(@Res() response, @Body() body: any) {
+    let employee = await this.employeeService.update(body);
+    if (employee) return response.status(HttpStatus.OK).send({ data: employee, status: HttpStatus.OK })
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrio un error cuando modificabamos los datos", status: HttpStatus.NOT_ACCEPTABLE });
   }
 
   @Post('create')
