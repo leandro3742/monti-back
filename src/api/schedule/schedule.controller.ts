@@ -81,7 +81,6 @@ export class ScheduleController {
         emails.push(adminEmails[i].email)
       }
       if(client.email) emails.push(client.email) //if client have email => send reserve
-
       sendEmail(emails, Subject['Create reserve'], {
         name: client.name,
         lastName: client.lastName,
