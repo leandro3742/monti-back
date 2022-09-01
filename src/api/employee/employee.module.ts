@@ -8,6 +8,7 @@ import { EmployeeController } from './employee.controller';
   imports: [TypeOrmModule.forFeature([Employee])],
   controllers: [EmployeeController],
   providers: [EmployeeService],
+  exports: [EmployeeService]
 })
 // eslint-disable-next-line prettier/prettier
 export class EmployeeModule { }

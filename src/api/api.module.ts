@@ -8,4 +8,4 @@ import { FreeDaysModule } from './freeDays/freeDays.module';
   imports: [ScheduleModule, ClientModule, EmployeeModule, AdminModule, FreeDaysModule],
 })
 // eslint-disable-next-line prettier/prettier
-export class ApiModule { }
+export class ApiModule {}

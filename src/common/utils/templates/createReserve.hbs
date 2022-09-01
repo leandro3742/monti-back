@@ -1,0 +1,20 @@
+<div id="body" style="height: 100vh; background: rgb(252,90,149); background: linear-gradient(126deg, rgba(252,90,149,1) 0%, rgba(9,9,121,1) 48%, rgba(18,144,203,1) 100%);">
+  <div>
+    <img src='https://calendaruy.netlify.app/assets/logo_transparent_background.d1e035b1.png' style="width: 200px;"/>
+  </div>
+  <div id="card" style='height: 100vh; display: flex; justify-content-center; align-items: center'>
+      <div id="cardBody" style='background-color: aliceblue;  width: 75%; margin: 100px auto; border: 2px solid #1290cb; box-shadow: 15px 15px 15px 15px rgba(0, 0, 0, 0.2); border-radius: 20px; padding: 20px;'>
+        <h3 style="font-size: 24px;">Se realizo una reserva con exito !!!</h3>
+        <div style="font-size: 18px;">
+          <span>
+            {{name}} {{lastName}} realizó una reserva exitosa.<br /> <br />
+            <b>Instructor: </b> {{employee.name}} {{employee.lastName}}<br />
+            <b>Hora:</b> {{start}} - {{end}} <br />
+            <b>Dia:</b> {{day}} <br />
+            <b>Mes:</b> {{month}} <br />
+            <b>Año:</b> {{year}} <br />
+          </span>
+        </div>
+    </div>
+  </div>
+</div>

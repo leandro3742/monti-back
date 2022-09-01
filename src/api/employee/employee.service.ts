@@ -15,7 +15,7 @@ export class EmployeeService {
   }
 
   public getSingle(id:any) {
-    return this.repository.findOneBy({id: id.id});
+    return this.repository.findOneBy({id: id});
   }
 
   public login(body: any) {

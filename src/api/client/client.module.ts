@@ -8,6 +8,7 @@ import { ClientController } from './client.controller';
   imports: [TypeOrmModule.forFeature([Client])],
   controllers: [ClientController],
   providers: [ClientService],
+  exports: [ClientService]
 })
 // eslint-disable-next-line prettier/prettier
 export class ClientModule { }

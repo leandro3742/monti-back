@@ -8,6 +8,7 @@ import { AdminController } from './admin.controller';
   imports: [TypeOrmModule.forFeature([Admin])],
   controllers: [AdminController],
   providers: [AdminService],
+  exports: [AdminService]
 })
 // eslint-disable-next-line prettier/prettier
 export class AdminModule { }

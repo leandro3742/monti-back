@@ -1,8 +1,11 @@
+import { Subject } from "./dictionary";
+
 const path = require('path')
 const nodemailer = require("nodemailer");
 const hbs = require('nodemailer-express-handlebars');
 
-export async function sendEmail(users) {
+export async function sendEmail(receivers:Array<String>, subject: Subject, context: any) {
+
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -17,19 +20,17 @@ export async function sendEmail(users) {
       extName: '.hbs',
       partialDir: path.resolve('./src/common/utils/templates'),
       defaultLayout: false
+
     },
     viewPath: path.resolve('./src/common/utils/templates'),
     extName: '.hbs'
   }))
-
   let mailOption = {
-    from: `Fred Foo 👻 <${process.env.EMAIL_USER}>`, // sender address
-    to: 'lmarrero@acceleanation.com', // list of receivers
-    subject: "Hello ✔", // Subject line
-    template: 'reports',
-    context: {
-      name: 'Felipe'
-    }
+    from: `Calendar Uy <${process.env.EMAIL_USER}>`, // sender address
+    to: receivers.toString(), // list of receivers
+    subject: subject, // Subject line
+    template: 'createReserve',
+    context: context
   }
   await transporter.sendMail(mailOption, function(err, info){
     if(err){

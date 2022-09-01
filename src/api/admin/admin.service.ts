@@ -13,6 +13,12 @@ export class AdminService {
     return this.repository.find();
   }
 
+  public getEmails(){
+    return this.repository
+    .createQueryBuilder("admin")
+    .select("admin.email")
+    .getMany()
+  }
   public login(body: any) {
     return this.repository.findOne({ where: { ci: body.ci, password: body.password } })
   }

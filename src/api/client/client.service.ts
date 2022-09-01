@@ -17,6 +17,10 @@ export class ClientService {
     return this.repository.findOne({ where: { ci: ci } });
   }
 
+  public getClientById(id: number) {
+    return this.repository.findOne({ where: { id: id } });
+  }
+
   public create(body: CreateClientDto) {
     return this.repository.save(body);
   }

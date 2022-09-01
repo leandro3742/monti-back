@@ -1,11 +1,17 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
+import { Subject } from 'src/common/utils/dictionary';
+import { sendEmail } from 'src/common/utils/email';
+import { AdminService } from '../admin/admin.service';
+import { ClientService } from '../client/client.service';
+import { EmployeeController } from '../employee/employee.controller';
+import { EmployeeService } from '../employee/employee.service';
 import { CreateScheduleDto } from './schedule.dto';
 import { ScheduleService } from './schedule.service';
 
 @Controller('schedule')
 export class ScheduleController {
   // eslint-disable-next-line prettier/prettier
-  constructor(private readonly scheduleService: ScheduleService) { }
+  constructor(private readonly scheduleService: ScheduleService, private readonly employeeService: EmployeeService, private readonly clientService: ClientService, private readonly adminService: AdminService) { }
 
   @Post('getSchedule')
   public async getSchedule(@Res() response, @Body() body: any) {
@@ -60,11 +66,35 @@ export class ScheduleController {
     }
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "La reserva no existe", status: HttpStatus.NOT_ACCEPTABLE })
   }
+
   @Post('create')
   public async create(@Res() response, @Body() body: CreateScheduleDto) {
     let avaiable = await this.scheduleService.avaiableTime(body);
     if(avaiable.length === 0){
       let create = await this.scheduleService.create(body);
+      let employee = await this.employeeService.getSingle(body.employee.toString());
+      let client = await this.clientService.getClientById(parseInt(body.client.toString()));
+
+      let emails = []
+      let adminEmails = await this.adminService.getEmails();
+      for(let i in adminEmails){
+        emails.push(adminEmails[i].email)
+      }
+      if(client.email) emails.push(client.email) //if client have email => send reserve
+
+      sendEmail(emails, Subject['Create reserve'], {
+        name: client.name,
+        lastName: client.lastName,
+        employee: {
+          name: employee.name,
+          lastName: employee.lastName
+        },
+        start: body.start,
+        end: body.end,
+        day: body.day,
+        month: body.month,
+        year: body.year
+      })
       return response.status(HttpStatus.CREATED).send({ data: create, status: HttpStatus.CREATED })
     }
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "La hora ya fue reservada", status: HttpStatus.NOT_ACCEPTABLE })
