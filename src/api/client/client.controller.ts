@@ -8,8 +8,20 @@ export class ClientController {
   constructor(readonly clientService: ClientService) { }
 
   @Get('get')
-  public getAll() {
-    return this.clientService.getClients();
+  public async getAll() {
+    let clients = await this.clientService.getClients();
+    let arr = []
+    for(let i in clients){
+      console.log(clients[i])
+      let cant = 0
+      for(let j in clients[i].schedules){
+        if(clients[i].schedules[j].isDeleted === false)
+          cant++;
+      }
+      delete clients[i].schedules;
+      arr.push({...clients[i], cantLessons: cant})
+    }
+    return arr
   }
 
   @Get('get/:ci')

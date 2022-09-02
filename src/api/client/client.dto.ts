@@ -8,9 +8,9 @@ export class CreateClientDto {
   @IsString()
   @IsNotEmpty()
   public lastName: string;
-
-  // @IsEmail()
-  // public email: string;
+  
+  @IsString()
+  public email: string;
 
   @IsString()
   @IsNotEmpty()

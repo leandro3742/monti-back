@@ -10,7 +10,12 @@ export class ClientService {
   private readonly repository: Repository<Client>;
 
   public getClients() {
-    return this.repository.find({where: {isDeleted: false}});
+    return this.repository     
+    .createQueryBuilder('client')
+    .leftJoinAndSelect("client.schedules", "schedule")
+    .where("client.isDeleted = :isDeleted", { isDeleted: false })
+    .getMany();
+    // return this.repository.find({where: {isDeleted: false}});
   }
 
   public getClient(ci: string) {
