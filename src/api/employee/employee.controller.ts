@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { response } from 'express';
 import { CreateEmployeeDto } from './employee.dto';
 import { EmployeeService } from './employee.service';
@@ -24,10 +24,10 @@ export class EmployeeController {
   }
 
 
-  @Post('update')
+  @Put('update')
   public async update(@Res() response, @Body() body: any) {
     let employee = await this.employeeService.update(body);
-    if (employee) return response.status(HttpStatus.OK).send({ data: employee, status: HttpStatus.OK })
+    if (employee) return response.status(HttpStatus.OK).send({ data: employee, status: HttpStatus.CREATED })
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrio un error cuando modificabamos los datos", status: HttpStatus.NOT_ACCEPTABLE });
   }
 
@@ -35,5 +35,17 @@ export class EmployeeController {
   public create(@Body() body: CreateEmployeeDto) {
     return this.employeeService.create(body);
 
+  }
+
+  @Get('find')
+  public async findAll() {
+    let clients = await this.employeeService.get();
+    return clients
+  }
+
+  @Get('find/:value')
+  public async find(@Param('value') value: string) {
+    let clients = await this.employeeService.findEmployee(value);
+    return clients
   }
 }

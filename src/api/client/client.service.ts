@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CreateClientDto } from './client.dto';
 import { Client } from './client.entity';
 
@@ -30,15 +30,41 @@ export class ClientService {
     return this.repository.save(body);
   }
 
+  public update(body: CreateClientDto) {
+    return this.repository
+      .createQueryBuilder()
+      .update('client')
+      .set({
+        name: body.name,
+        lastName: body.lastName,
+        email: body.email,
+        mobilePhone: body.mobilePhone 
+      })
+      .where('ci = :id', {id : body.ci })
+      .execute();
+  }
+
   public delete(id: string) {
     return this.repository
       .createQueryBuilder()
       .update('client')
-      .set({ isDeleted: true })
+      .set({isDeleted: true })
       .where('id = :id', {id : id })
       .execute();
   }
 
+  public findClient(value: string) {
+    return this.repository.find({
+      where: [
+        {
+          name: Like(`%${value}%`)
+        },
+        {
+          lastName: Like(`%${value}%`)
+        }
+      ]
+    })
+  }
   // public createUser(body: CreateUserDto): Promise<User> {
   //   const user: User = new User();
 

@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isEmail, isMobilePhone } from 'class-validator';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CreateEmployeeDto } from './employee.dto';
 import { Employee } from './employee.entity';
 
@@ -38,5 +38,18 @@ export class EmployeeService {
     })
     .where("id = :employeeId", {employeeId: body.id})
     .execute();
+  }
+
+  public findEmployee(value: string) {
+    return this.repository.find({
+      where: [
+        {
+          name: Like(`%${value}%`)
+        },
+        {
+          lastName: Like(`%${value}%`)
+        }
+      ]
+    })
   }
 }

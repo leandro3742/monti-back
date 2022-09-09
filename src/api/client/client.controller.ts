@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
+import { response } from 'express';
 import { CreateClientDto } from './client.dto';
 import { ClientService } from './client.service';
 
@@ -12,7 +13,6 @@ export class ClientController {
     let clients = await this.clientService.getClients();
     let arr = []
     for(let i in clients){
-      console.log(clients[i])
       let cant = 0
       for(let j in clients[i].schedules){
         if(clients[i].schedules[j].isDeleted === false)
@@ -31,6 +31,13 @@ export class ClientController {
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "El usuario no existe", status: HttpStatus.NOT_ACCEPTABLE });
   }
 
+  @Put('update')
+  public async update(@Res() response, @Body() body: CreateClientDto){
+    let client = await this.clientService.update(body);
+    if (client) return response.status(HttpStatus.CREATED).send({ data: client, status: HttpStatus.CREATED })
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrió un error al intentar crear el usuario", status: HttpStatus.NOT_ACCEPTABLE });
+  }
+
   @Post('create')
   public async create(@Res() response, @Body() body: CreateClientDto) {
     let client = await this.clientService.create(body);
@@ -38,6 +45,18 @@ export class ClientController {
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrió un error al intentar crear el usuario", status: HttpStatus.NOT_ACCEPTABLE });
 
     return this.clientService.create(body);
+  }
+
+  @Get('find')
+  public async findAll() {
+    let clients = await this.clientService.getClients();
+    return clients
+  }
+
+  @Get('find/:value')
+  public async find(@Param('value') value: string) {
+    let clients = await this.clientService.findClient(value);
+    return clients
   }
 
   @Delete('/delete/:id')
