@@ -30,6 +30,8 @@ export class EmployeeService {
     .createQueryBuilder()
     .update('employee')
     .set({
+      name: body.name,
+      lastName: body.lastName,
       mobilePhone: body.mobilePhone,
       email: body.email,
       password: body.password, 

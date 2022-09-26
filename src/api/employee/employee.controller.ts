@@ -13,8 +13,8 @@ export class EmployeeController {
     return this.employeeService.get();
   }
   @Get('get/:id')
-  public getSingle(@Param() id: string) {
-    return this.employeeService.getSingle(id);
+  public getSingle(@Param() id: any) {
+    return this.employeeService.getSingle(id.id);
   }
   @Post('login')
   public async login(@Res() response, @Body() body: any) {
