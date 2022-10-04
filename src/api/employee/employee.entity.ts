@@ -40,6 +40,9 @@ export class Employee {
   @Column({ type: 'integer', nullable: true })
   public finish: number;
 
+  @Column({ type: 'varchar', length: 120, nullable: true })
+  public company: string;
+
   @Column({ type: 'enum', enum: UserRole, default: UserRole.CLIENT })
   public role: string;
 

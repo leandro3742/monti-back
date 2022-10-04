@@ -10,8 +10,8 @@ export class EmployeeService {
   @InjectRepository(Employee)
   private readonly repository: Repository<Employee>;
 
-  public get() {
-    return this.repository.find();
+  public get(company:string) {
+    return this.repository.find({ where: {company: company}});
   }
 
   public getSingle(id:any) {
@@ -42,14 +42,16 @@ export class EmployeeService {
     .execute();
   }
 
-  public findEmployee(value: string) {
+  public findEmployee(data: any) {
     return this.repository.find({
       where: [
         {
-          name: Like(`%${value}%`)
+          name: Like(`%${data.value}%`),
+          company: data.company
         },
         {
-          lastName: Like(`%${value}%`)
+          lastName: Like(`%${data.value}%`),
+          company: data.company
         }
       ]
     })

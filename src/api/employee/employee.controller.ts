@@ -8,9 +8,9 @@ export class EmployeeController {
   // eslint-disable-next-line prettier/prettier
   constructor(private readonly employeeService: EmployeeService) { }
 
-  @Get('get')
-  public get() {
-    return this.employeeService.get();
+  @Get('getByCompany/:company')
+  public get(@Param('company') company: string) {
+    return this.employeeService.get(company);
   }
   @Get('get/:id')
   public getSingle(@Param() id: any) {
@@ -33,13 +33,14 @@ export class EmployeeController {
 
   @Post('create')
   public create(@Body() body: CreateEmployeeDto) {
+    console.log(body)
     return this.employeeService.create(body);
 
   }
 
-  @Get('find')
-  public async findAll() {
-    let clients = await this.employeeService.get();
+  @Get('find/:company')
+  public async findAll(@Param() company: string) {
+    let clients = await this.employeeService.get(company);
     return clients
   }
 

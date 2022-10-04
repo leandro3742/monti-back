@@ -23,4 +23,7 @@ export class CreateEmployeeDto {
   @IsString()
   @IsNotEmpty()
   public mobilePhone: string;
+
+  @IsString()
+  public company: string;
 }

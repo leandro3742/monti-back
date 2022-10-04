@@ -23,4 +23,8 @@ export class CreateAdminDto {
   @IsString()
   @IsNotEmpty()
   public mobilePhone: string;
+
+  @IsString()
+  @IsNotEmpty()
+  public company: string;
 }
