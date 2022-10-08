@@ -18,5 +18,5 @@ export class CreateClientDto {
 
   @IsString()
   @IsNotEmpty()
-  public mobilePhone: string;
+  public mobilePhone: string;z
 }

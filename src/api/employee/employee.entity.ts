@@ -43,7 +43,7 @@ export class Employee {
   @Column({ type: 'varchar', length: 120, nullable: true })
   public company: string;
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.CLIENT })
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.EMPLOYEE })
   public role: string;
 
   @OneToMany(() => Schedule, (schedule) => schedule.employee)
@@ -51,6 +51,9 @@ export class Employee {
 
   @OneToMany(() => FreeDays, (freeDays) => freeDays.employee)
   public freeDays: FreeDays[];
+
+  @Column({ type: 'jsonb' })
+  public timetable: object;
 
   @Column({ type: 'boolean', default: false })
   public isDeleted: boolean;

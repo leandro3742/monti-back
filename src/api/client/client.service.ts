@@ -9,11 +9,12 @@ export class ClientService {
   @InjectRepository(Client)
   private readonly repository: Repository<Client>;
 
-  public getClients() {
+  public getClients(company: string) {
     return this.repository     
     .createQueryBuilder('client')
     .leftJoinAndSelect("client.schedules", "schedule")
     .where("client.isDeleted = :isDeleted", { isDeleted: false })
+    .andWhere('client.company = :company', { company: company})
     .getMany();
     // return this.repository.find({where: {isDeleted: false}});
   }

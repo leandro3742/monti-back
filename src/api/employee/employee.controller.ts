@@ -32,10 +32,11 @@ export class EmployeeController {
   }
 
   @Post('create')
-  public create(@Body() body: CreateEmployeeDto) {
+  public async create(@Res() response, @Body() body: CreateEmployeeDto) {
     console.log(body)
-    return this.employeeService.create(body);
-
+    let employee = await this.employeeService.create(body);
+    if (employee) return response.status(HttpStatus.CREATED).send({ data: employee, status: HttpStatus.CREATED })
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrió un error al intentar crear el usuario", status: HttpStatus.NOT_ACCEPTABLE });
   }
 
   @Get('find/:company')

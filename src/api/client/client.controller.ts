@@ -8,9 +8,9 @@ export class ClientController {
   // eslint-disable-next-line prettier/prettier
   constructor(readonly clientService: ClientService) { }
 
-  @Get('get')
-  public async getAll() {
-    let clients = await this.clientService.getClients();
+  @Get('getByCompany/:company')
+  public async getAll(@Param('company') company: string) {
+    let clients = await this.clientService.getClients(company);
     let arr = []
     for(let i in clients){
       let cant = 0
@@ -40,7 +40,6 @@ export class ClientController {
 
   @Post('create')
   public async create(@Res() response, @Body() body: CreateClientDto) {
-    console.log(body)
     let client = await this.clientService.create(body);
     if (client) return response.status(HttpStatus.CREATED).send({ data: client, status: HttpStatus.CREATED })
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrió un error al intentar crear el usuario", status: HttpStatus.NOT_ACCEPTABLE });
@@ -48,9 +47,9 @@ export class ClientController {
     return this.clientService.create(body);
   }
 
-  @Get('find')
-  public async findAll() {
-    let clients = await this.clientService.getClients();
+  @Get('findByCompany/:company')
+  public async findAll(@Param('company') company: string) {
+    let clients = await this.clientService.getClients(company);
     return clients
   }
 

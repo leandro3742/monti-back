@@ -9,7 +9,7 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   public lastName: string;
 
-  @IsEmail()
+  @IsString()
   public email: string;
 
   @IsString()
