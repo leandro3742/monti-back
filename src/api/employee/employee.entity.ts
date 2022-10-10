@@ -52,8 +52,8 @@ export class Employee {
   @OneToMany(() => FreeDays, (freeDays) => freeDays.employee)
   public freeDays: FreeDays[];
 
-  @Column({ type: 'jsonb' })
-  public timetable: object;
+  // @Column({ type: 'jsonb' })
+  // public timetable: object;
 
   @Column({ type: 'boolean', default: false })
   public isDeleted: boolean;
