@@ -12,6 +12,7 @@ export class EmployeeController {
   public get(@Param('company') company: string) {
     return this.employeeService.get(company);
   }
+  
   @Get('get/:id')
   public getSingle(@Param() id: any) {
     return this.employeeService.getSingle(id.id);
