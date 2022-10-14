@@ -24,6 +24,12 @@ export class EmployeeController {
     return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "El usuario y la contraseña no coinciden", status: HttpStatus.NOT_ACCEPTABLE });
   }
 
+  @Put('updateTimeTable')
+  public async updateTimeTable(@Res() response, @Body() body: any) {
+    let employee = await this.employeeService.updateTimeTable(body);
+    if (employee) return response.status(HttpStatus.OK).send({ data: employee, status: HttpStatus.OK })
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrio un error cuando modificabamos los datos", status: HttpStatus.NOT_ACCEPTABLE });
+  }
 
   @Put('update')
   public async update(@Res() response, @Body() body: any) {

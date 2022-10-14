@@ -25,6 +25,17 @@ export class EmployeeService {
     return this.repository.save(body);
   }
 
+  public updateTimeTable(body:any){
+    return this.repository
+    .createQueryBuilder()
+    .update('employee')
+    .set({
+      timetable: body.timetable
+    })
+    .where("id = :employeeId", {employeeId: body.id})
+    .execute();
+  }
+
   public update(body:any) {
     return this.repository
     .createQueryBuilder()
@@ -35,8 +46,6 @@ export class EmployeeService {
       mobilePhone: body.mobilePhone,
       email: body.email,
       password: body.password, 
-      start: body.start,
-      finish: body.finish
     })
     .where("id = :employeeId", {employeeId: body.id})
     .execute();

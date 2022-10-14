@@ -35,7 +35,7 @@ export class Admin {
   @Column({ type: 'enum', enum: UserRole, default: UserRole.ADMIN })
   public role: string;
 
-  @Column({ type: 'varchar', length: 120, nullable: true})
+  @Column({ type: 'varchar', length: 120, nullable: true, default: 'chufles'})
   public company: string;
 
   @Column({ type: 'boolean', default: false })

@@ -34,13 +34,7 @@ export class Employee {
   @Column({ type: 'varchar', length: 120 })
   public password: string;
 
-  @Column({ type: 'integer', nullable: true })
-  public start: number;
-
-  @Column({ type: 'integer', nullable: true })
-  public finish: number;
-
-  @Column({ type: 'varchar', length: 120, nullable: true })
+  @Column({ type: 'varchar', length: 120, nullable: true, default: 'chufles' })
   public company: string;
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.EMPLOYEE })
@@ -52,8 +46,16 @@ export class Employee {
   @OneToMany(() => FreeDays, (freeDays) => freeDays.employee)
   public freeDays: FreeDays[];
 
-  // @Column({ type: 'jsonb' })
-  // public timetable: object;
+  @Column({ type: 'jsonb', default: {
+    'Lunes': {start: '08:00', end: '18:00', work: true}, 
+    'Martes': {start: '08:00', end: '18:00', work: true}, 
+    'Miércoles': {start: '08:00', end: '18:00', work: true}, 
+    'Jueves': {start: '08:00', end: '18:00', work: true}, 
+    'Viernes': {start: '08:00', end: '18:00', work: true}, 
+    'Sábado': {start: '08:00', end: '18:00', work: true}, 
+    'Domingo': {start: '08:00', end: '18:00', work: false}, 
+  }})
+  public timetable: object;
 
   @Column({ type: 'boolean', default: false })
   public isDeleted: boolean;
