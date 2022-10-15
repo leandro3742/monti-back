@@ -57,4 +57,16 @@ export class EmployeeController {
     let clients = await this.employeeService.findEmployee(value);
     return clients
   }
+  @Get('getCompanies')
+  public async getCompanies() {
+    let companies = await this.employeeService.getCompanies();
+    if(companies){
+      let arr = []
+      for(let i in companies){
+        arr.push(companies[i].employee_company)
+      }
+      return response.status(HttpStatus.CREATED).send({ data: arr, status: HttpStatus.CREATED })
+    }
+    return response.status(HttpStatus.NOT_ACCEPTABLE).send({ data: "Ocurrió un error, vuelva a intentarlo mas tarde", status: HttpStatus.NOT_ACCEPTABLE });
+  }
 }

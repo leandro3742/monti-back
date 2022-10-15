@@ -65,4 +65,12 @@ export class EmployeeService {
       ]
     })
   }
+
+  public getCompanies(){
+    return this.repository
+    .createQueryBuilder('employee')
+    .select('employee.company')
+    .distinct(true)
+    .execute();
+  }
 }
