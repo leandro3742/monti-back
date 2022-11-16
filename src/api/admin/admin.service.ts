@@ -20,7 +20,7 @@ export class AdminService {
     .getMany()
   }
   public login(body: any) {
-    return this.repository.findOne({ where: { ci: body.ci, password: body.password } })
+    return this.repository.findOne({ where: { email: body.email, password: body.password } })
   }
   public create(body: CreateAdminDto) {
     return this.repository.save(body);

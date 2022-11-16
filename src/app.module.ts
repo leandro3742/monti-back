@@ -6,15 +6,14 @@ import { getEnvPath } from './common/helper/env.helper';
 import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiModule } from './api/api.module';
-import { EmployeeModule } from './api/employee/employee.module';
-
+import { TransactionModule } from './api/transaction/transaction.module';
 const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath, isGlobal: true }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
     ApiModule,
-    EmployeeModule
+    TransactionModule
   ],
   controllers: [AppController],
   providers: [AppService],
