@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Res, Param } from '@nestjs/common';
 import { response } from 'express';
 import { CreateTransactionDto } from './transaction.dto';
 import { TransactionService } from './transaction.service';
@@ -11,6 +11,11 @@ export class TransactionController {
   @Get('get')
   public get() {
     return this.TransactionService.get();
+  }
+
+  @Get('get/:day/:month/:year')
+  public getByDay(@Param() params: any) {
+    return this.TransactionService.getByDay(params);
   }
 
   @Post('create')

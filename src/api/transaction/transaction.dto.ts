@@ -1,4 +1,4 @@
-import { IsDate, IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreateTransactionDto {
   @IsString()
@@ -8,5 +8,19 @@ export class CreateTransactionDto {
   public value: number;
 
   @IsString()
-  public hour: string
+  public hour: string;
+
+  @IsString()
+  public day: string;
+}
+
+export class DTDay {
+  @IsNumber()
+  public day: number;
+
+  @IsNumber()
+  public month: number;
+
+  @IsNumber()
+  public year: number;
 }
