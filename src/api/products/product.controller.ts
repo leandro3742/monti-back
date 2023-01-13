@@ -13,8 +13,8 @@ export class ProductController {
     return this.ProductService.get();
   }
 
-  @Get('get/filter/:filter')
-  public getByFilter(@Param('filter') filter: string) {
+  @Get('get/filter/:business/:filter')
+  public getByFilter(@Param('filter') filter: string, @Param('business') business: string) {
     return this.ProductService.getByFilter(filter);
   }
 
@@ -28,8 +28,9 @@ export class ProductController {
     return this.ProductService.delete(name);
   }
   
-  @Put('update/:name')
-  public update(@Param('name') name: string, @Body() body: CreateProductDto) {
-    return this.ProductService.update(name, body);
+  @Put('update/:business/:name')
+  public update(@Param('name') name: string, @Param('business') business: string ,@Body() body: CreateProductDto) {
+    return this.ProductService.update(name, business, body);
   }
+
 }

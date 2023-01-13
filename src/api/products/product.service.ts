@@ -14,6 +14,13 @@ export class ProductService {
     // console.log(count)
     return this.repository.find();
   }
+  
+  public async getByBusiness(id: string) {
+    return this.repository.createQueryBuilder('product')
+      .leftJoinAndSelect('product.business', 'business')
+      .where('business.name = :id', { id: id })
+      .getMany();
+  }
 
   public async getByFilter(filter: string) {
     return this.repository.find({where: {name: ILike('%' + filter + '%')}});
@@ -31,11 +38,12 @@ export class ProductService {
     return this.repository.delete({name: name});
   }
 
-  public async update(name: string, body: CreateProductDto) {
-    const product = await this.repository.findOne({ where: { name: name } });
-    if (!product) {
-      throw new HttpException('Product not found', 404);
-    }
-    return this.repository.update({name: name}, body);
+  public async update(name: string, business: string, body: CreateProductDto) {
+    return await this.repository.createQueryBuilder()
+      .update(Product)
+      .set({ name: body.name, stock: body.stock, price: body.price })
+      .where('name = :name', { name: name })
+      .andWhere('business.name = :business', { business: business })      
+      .execute();
   }
 }

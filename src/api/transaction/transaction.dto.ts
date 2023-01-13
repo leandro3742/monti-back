@@ -1,4 +1,5 @@
 import { IsNumber, IsString } from 'class-validator';
+import { Business } from '../business/business.entity';
 
 export class CreateTransactionDto {
   @IsString()
@@ -12,6 +13,9 @@ export class CreateTransactionDto {
 
   @IsString()
   public day: string;
+
+  @IsString()
+  public business: Business
 }
 
 export class DTDay {

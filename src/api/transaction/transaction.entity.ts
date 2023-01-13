@@ -7,6 +7,7 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
+import { Business } from '../business/business.entity';
 import { UserRole } from '../enums';
 
 @Entity()
@@ -34,4 +35,7 @@ export class Transaction {
 
   @UpdateDateColumn({ type: 'timestamp' })
   public updatedAt!: Date;
+
+  @ManyToOne(() => Business, (business) => business.transactions)
+  public business: string;
 }

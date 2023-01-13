@@ -1,11 +1,13 @@
 import { IsNumber, IsNumberString, IsString } from 'class-validator';
+import { Business } from '../business/business.entity';
 
 export class CreateProductDto {
   @IsString()
   public name: string;
-  @IsString()
+  @IsNumber()
   public stock: number;
-  @IsString()
+  @IsNumber()
   public price: number;
-
+  @IsString()
+  public business: Business;
 }

@@ -4,8 +4,9 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
-
+import { Business } from '../business/business.entity';
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn()
@@ -28,4 +29,7 @@ export class Product {
 
   @UpdateDateColumn({ type: 'timestamp' })
   public updatedAt!: Date;
+
+  @ManyToOne(() => Business, (business) => business.products)
+  public business: Business;
 }
