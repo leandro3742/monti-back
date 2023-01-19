@@ -13,8 +13,13 @@ export class BusinessController {
   }
 
   @Get('getProducts/:name')
-  public getProducts(@Param('name') name: string) {
-    return this.businessService.getProducts(name);
+  public async getProducts(@Res() response, @Param('name') name: string) {
+
+    let resp = await this.businessService.getProducts(name);
+    if (resp == null) {
+      return response.status(HttpStatus.NOT_FOUND).send({data: 'Business not found', status: HttpStatus.NOT_FOUND});
+    }
+    return response.status(HttpStatus.OK).send({data: resp, status: HttpStatus.OK});
   }
 
   @Get('getTransactions/:name/:day/:month/:year')
