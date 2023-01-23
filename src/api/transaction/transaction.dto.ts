@@ -28,3 +28,12 @@ export class DTDay {
   @IsNumber()
   public year: number;
 }
+
+export class SaleDto{
+  @IsString()
+  public name: string;
+
+  @IsString()
+  public price: number;
+
+}

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Post, Res, Param } from '@nestjs/common';
 import { response } from 'express';
-import { CreateTransactionDto } from './transaction.dto';
+import { CreateTransactionDto, SaleDto } from './transaction.dto';
 import { TransactionService } from './transaction.service';
 
 @Controller('transaction')
@@ -22,4 +22,14 @@ export class TransactionController {
   public create(@Body() body: CreateTransactionDto) {
     return this.TransactionService.create(body);
   }
+
+  @Post('create/sales')
+  public async createSales(@Res() response, @Body() body: {sales: Array<SaleDto>, business: string}) {
+    let resp = await this.TransactionService.createSales(body.sales, body.business);
+    if(resp == null){
+      return response.status(HttpStatus.NOT_FOUND).send({data: 'Business not found', status: HttpStatus.NOT_FOUND});
+    }
+    return response.status(HttpStatus.OK).send({data: resp, status: HttpStatus.OK});
+  }
+  
 }
