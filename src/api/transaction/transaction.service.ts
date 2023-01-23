@@ -21,18 +21,19 @@ export class TransactionService {
     return this.repository.save(body);
   }
 
-  public async createSales(sales: Array<SaleDto>, business: string) {
+  public async createSales(sales: Array<CreateTransactionDto>) {
     let transactions = [];
-    let minutes;
-    new Date().getMinutes() < 10 ? minutes = '0' + new Date().getMinutes() : minutes = new Date().getMinutes()
-    for (let sale of sales) {
-      let transaction = new Transaction();
-      transaction.type = 'Venta';
-      transaction.value = sale.price;
-      transaction.day = new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate();
-      transaction.hour = new Date().getHours() + ':' + minutes;
-      transaction.business = business;
-      transactions.push(transaction);
+    // for (let sale of sales) {
+    //   let transaction = new CreateTransactionDto()
+    //   transaction.type = 'Venta';
+    //   transaction.value = sale.price;
+    //   transaction.day = sale.day;
+    //   transaction.hour = sale.hour;
+    //   transaction.business = business;
+    //   transactions.push(transaction);
+    // }
+    for(let sale of sales){
+      transactions.push(sale);
     }
     return await this.repository.save(transactions)
   }

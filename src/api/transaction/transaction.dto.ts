@@ -36,4 +36,12 @@ export class SaleDto{
   @IsString()
   public price: number;
 
+  @IsString()
+  public day: string
+
+  @IsString()
+  public hour: string
+
+  @IsString()
+  public business: Business
 }

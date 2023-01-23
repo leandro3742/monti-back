@@ -24,8 +24,8 @@ export class TransactionController {
   }
 
   @Post('create/sales')
-  public async createSales(@Res() response, @Body() body: {sales: Array<SaleDto>, business: string}) {
-    let resp = await this.TransactionService.createSales(body.sales, body.business);
+  public async createSales(@Res() response, @Body() body: {sales: Array<CreateTransactionDto>}) {
+    let resp = await this.TransactionService.createSales(body.sales);
     if(resp == null){
       return response.status(HttpStatus.NOT_FOUND).send({data: 'Business not found', status: HttpStatus.NOT_FOUND});
     }
