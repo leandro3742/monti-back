@@ -15,6 +15,7 @@ export class TransactionController {
 
   @Get('get/:day/:month/:year')
   public getByDay(@Param() params: any) {
+    
     return this.TransactionService.getByDay(params);
   }
 

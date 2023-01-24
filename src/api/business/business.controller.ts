@@ -23,7 +23,11 @@ export class BusinessController {
   }
 
   @Get('getTransactions/:name/:day/:month/:year')
-  public getTransactions(@Param('name') name: string, @Param('day') day: string, @Param('month') month: string, @Param('year') year: string) {
-    return this.businessService.getTransactions(name, `${year}-${month}-${day}`);
+  public async getTransactions(@Res() response, @Param('name') name: string, @Param('day') day: string, @Param('month') month: string, @Param('year') year: string) {
+    let res = await this.businessService.getTransactions(name, `${year}-${month}-${day}`);
+    if (res == null) {
+      return response.status(HttpStatus.NOT_FOUND).send({data: [], status: HttpStatus.NOT_FOUND});
+    }
+    return response.status(HttpStatus.OK).send({data: res, status: HttpStatus.OK});
   }
 }

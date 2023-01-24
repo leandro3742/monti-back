@@ -15,6 +15,7 @@ export class TransactionService {
   public async getByDay(date: DTDay) {
     let day = `${date.year}-${date.month}-${date.day}`;
     return await this.repository.find({ where: {day: day} });
+    
   }
 
   public create(body: any) {
@@ -23,15 +24,6 @@ export class TransactionService {
 
   public async createSales(sales: Array<CreateTransactionDto>) {
     let transactions = [];
-    // for (let sale of sales) {
-    //   let transaction = new CreateTransactionDto()
-    //   transaction.type = 'Venta';
-    //   transaction.value = sale.price;
-    //   transaction.day = sale.day;
-    //   transaction.hour = sale.hour;
-    //   transaction.business = business;
-    //   transactions.push(transaction);
-    // }
     for(let sale of sales){
       transactions.push(sale);
     }

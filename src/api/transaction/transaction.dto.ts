@@ -9,6 +9,9 @@ export class CreateTransactionDto {
   public value: number;
 
   @IsString()
+  public product: string;
+  
+  @IsString()
   public hour: string;
 
   @IsString()

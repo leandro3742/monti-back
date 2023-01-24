@@ -27,6 +27,9 @@ export class Transaction {
   @Column({ type: 'varchar' })
   public day: string;
 
+  @Column({type: 'varchar', nullable: true})
+  public product: string;
+
   @Column({ type: 'boolean', default: false })
   public isDeleted: boolean;
 

@@ -21,10 +21,11 @@ export class BusinessService {
   }
 
   public async getTransactions(name: string, day: string) {
-    return this.repository.createQueryBuilder('business')
+    let response = await this.repository.createQueryBuilder('business')
       .leftJoinAndSelect('business.transactions', 'transactions')
       .where('business.name = :name', { name: name })
       .andWhere('transactions.day = :day', { day: day })
       .getOne();
+    return response;
   }
 }
