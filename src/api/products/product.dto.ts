@@ -8,6 +8,8 @@ export class CreateProductDto {
   public stock: number;
   @IsNumber()
   public price: number;
+  @IsNumber()
+  public code: number;
   @IsString()
   public business: Business;
 }

@@ -13,7 +13,7 @@ export class Product {
   public id!: number;
 
   @Column({ type: 'varchar', length: 120, nullable: true })
-  public code: string;
+  public code: number;
 
   @Column({ type: 'varchar', length: 120 })
   public name: string;
