@@ -15,7 +15,7 @@ export class TransactionController {
 
   @Get('get/:day/:month/:year')
   public getByDay(@Param() params: any) {
-    
+
     return this.TransactionService.getByDay(params);
   }
 
@@ -25,12 +25,21 @@ export class TransactionController {
   }
 
   @Post('create/sales')
-  public async createSales(@Res() response, @Body() body: {sales: Array<CreateTransactionDto>}) {
+  public async createSales(@Res() response, @Body() body: { sales: Array<CreateTransactionDto> }) {
     let resp = await this.TransactionService.createSales(body.sales);
-    if(resp == null){
-      return response.status(HttpStatus.NOT_FOUND).send({data: 'Business not found', status: HttpStatus.NOT_FOUND});
+    if (resp == null) {
+      return response.status(HttpStatus.NOT_FOUND).send({ data: 'Business not found', status: HttpStatus.NOT_FOUND });
     }
-    return response.status(HttpStatus.OK).send({data: resp, status: HttpStatus.OK});
+    return response.status(HttpStatus.OK).send({ data: resp, status: HttpStatus.OK });
   }
-  
+
+  @Get('getByMonth/:month/:year')
+  public async getByMonth(@Param() params: any, @Res() response) {
+    let resp = await this.TransactionService.getByMonth(params.year, params.month);
+    if (resp == null) {
+      return response.status(HttpStatus.NOT_FOUND).send({ data: 'Business not found', status: HttpStatus.NOT_FOUND });
+    }
+    return response.status(HttpStatus.OK).send({ data: resp, status: HttpStatus.OK });
+  }
+
 }

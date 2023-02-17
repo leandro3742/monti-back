@@ -14,8 +14,8 @@ export class TransactionService {
   }
   public async getByDay(date: DTDay) {
     let day = `${date.year}-${date.month}-${date.day}`;
-    return await this.repository.find({ where: {day: day} });
-    
+    return await this.repository.find({ where: { day: day } });
+
   }
 
   public create(body: any) {
@@ -24,9 +24,14 @@ export class TransactionService {
 
   public async createSales(sales: Array<CreateTransactionDto>) {
     let transactions = [];
-    for(let sale of sales){
+    for (let sale of sales) {
       transactions.push(sale);
     }
     return await this.repository.save(transactions)
+  }
+
+  public async getByMonth(year: String, month: String) {
+    let day = `${year}-${month}`;
+    return await this.repository.find({ where: { day: Like(`${day}%`) } });
   }
 }

@@ -17,7 +17,7 @@ export class BusinessService {
   }
 
   public async getProducts(name: string) {
-    return this.repository.findOne({relations: ['products'], where: {name: name}});;
+    return this.repository.findOne({ relations: ['products'], where: { name: name } });;
   }
 
   public async getTransactions(name: string, day: string) {
@@ -25,6 +25,15 @@ export class BusinessService {
       .leftJoinAndSelect('business.transactions', 'transactions')
       .where('business.name = :name', { name: name })
       .andWhere('transactions.day = :day', { day: day })
+      .getOne();
+    return response;
+  }
+
+  public async getTransactionsByMonth(name: string, month: string) {
+    let response = await this.repository.createQueryBuilder('business')
+      .leftJoinAndSelect('business.transactions', 'transactions')
+      .where('business.name = :name', { name: name })
+      .andWhere('transactions.day LIKE :month', { month: `${month}%` })
       .getOne();
     return response;
   }
